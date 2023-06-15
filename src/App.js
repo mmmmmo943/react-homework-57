@@ -201,9 +201,28 @@ const processSelectedList = (selectedList) => {
     )
   }
 
-const weekday_selected=()=>{
+  const clear = () => {
 
-}
+    setSelectedList([])
+  
+ 
+    const newTableData = table_data.map(dayObj => {
+      dayObj.hour_sections.forEach(timeObj => {
+        timeObj.selected = false;
+      });
+      return dayObj;
+    });
+  
+    setTable_data(newTableData);
+  
+    const timeCells = document.querySelectorAll('.time-cell');
+    timeCells.forEach(cell => {
+      if (cell.style.backgroundColor === 'cornflowerblue') {
+        cell.style.backgroundColor = 'transparent';
+      }
+    });
+  }
+  
 
   const [table_data, setTable_data] = useState(initialTableData);
 
@@ -280,7 +299,7 @@ const weekday_selected=()=>{
       <div className='bottom'>
         <div style={{ flex: 3.5, display: "flex", justifyContent: "center", alignItems: "center" }}>已选择时间段</div>
    
-        <div className='selected_time' style={{ flex: 1 }}>清空</div>
+        <div className='selected_time' style={{ flex: 1 }} onClick={clear}>清空</div>
       </div>
       <div className='list'>
         {selectedList.map((item) => {
